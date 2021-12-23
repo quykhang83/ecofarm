@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>ADMIN PRODUCT</title>
+    <link rel="shortcut icon" href="img/home/logoEco.svg">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="https://kit.fontawesome.com/9ac8be3ee8.js" crossorigin="anonymous"></script>
+    <script src="libs/bootstrap-5.1.3-dist/js/jquery-3.6.0.min.js"></script>
+    <style>
+        #btnDel{
+            background: var(--main-color);
+            border-radius: 10px;
+            color: #fff;
+            font-size: .8rem;
+            padding: .5rem 1rem;
+            border: 1px solid var(--main-color);
+            cursor: pointer;
+            margin-left: 30px;
+            transition: .2s;
+        }
+        #btnDel:hover{
+            background: rgb(21, 105, 21);
+            color: var(--main-color);
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar">
+       <div class="sidebar-brand">
+            <img src="img/LogoAdmin.svg" alt="logo" height="60px">
+       </div>
+       <div class="sidebar-menu">
+           <ul>
+               <li>
+                   <a href="admin.html" ><span class="fas fa-igloo"></span>
+                    <span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="customer.html"><span class="fas fa-users"></span>
+                     <span>Khách hàng</span></a>
+                 </li>
+                 <li>
+                    <a href="product.html" class="active"><span class="fas fa-clipboard-list"></span>
+                     <span>Sản phẩm</span></a>
+                 </li>
+                 <li>
+                    <a href=""><span class="fas fa-shopping-bag"></span>
+                     <span>Đơn hàng</span></a>
+                 </li>
+                 <li>
+                    <a href=""><span class="fas fa-receipt"></span>
+                     <span>Hóa đơn</span></a>
+                 </li> 
+                 <li>
+                    <a href=""><span class="fas fa-user-circle"></span>
+                     <span>Tài khoản</span></a>
+                 </li>
+                 <li>
+                    <a href=""><span class="fas fa-clipboard-list"></span>
+                     <span>Tasks</span></a>
+                 </li>
+
+           </ul>
+       </div>
+    </div>
+    <div class="main-content">
+        <header>
+            <h2 style="margin-top: 10px">
+                <label for="nav-toggle">
+                    <span class="fas fa-bars"> </span>
+                </label>
+                <span id="dashboard">Dashboard</span> 
+            </h2>
+
+            <div class="search-wrapper">
+                <span class="fas fa-search"></span>
+                <input type="search" placeholder="Search here">
+            </div>
+
+            <div class="user-wrapper" style="cursor: pointer;">
+                <img src="img/admin/1.jpg" width="30px" height="30px" alt="">
+                <div>
+                    <h4>Lê Khánh Băng</h4>
+                    <small>Admin</small>
+                </div>
+            </div>
+            <div id="infoAdmin">
+                <a href="#"><i class="fas fa-cog"></i>&nbsp; Setting</a>
+                <a href="index.html" onclick="localStorage.clear()"><i class="fas fa-sign-out-alt"></i>&nbsp; Log out</a>
+            </div>
+            <script>
+                let account = document.querySelector("#infoAdmin");
+                document.querySelector(".user-wrapper").onclick = () => {
+                    account.classList.toggle("active");
+                };
+            </script>
+        </header>
+
+        <main>
+                <div class="projects">
+                    <div class="card">
+                        <div class="card-add">
+                            <div class="card-header">
+                               <h3>Thêm sản phẩm</h3> 
+                            </div>
+                            <div class="table-responsive">
+                                <form action="" id="themsanpham" name="themsanpham"></form>
+                                    <table id="addproduct" width="100%">
+                                        <thead>
+                                            <td>Hình ảnh</td>
+                                            <td>Mã sản phẩm</td>
+                                            <td>Tên sản phẩm</td>
+                                            <td>Loại sản phẩm</td>
+                                            <td>Giá</td>
+                                            <td>Số lượng</td>
+                                            <td></td>
+                                        </thead>
+                                        <tbody>
+                                            <td><input id="ha" required type="file" name="ha"></td>
+                                            <td><input id="masp" required maxlength="5" type="text" name="masp" placeholder="5 ký tự"></td>
+                                            <td><input required name="tensp" id="tensp" type="text" placeholder="không rỗng"></td>
+                                            <td>
+                                                <select required id="loaisp" size="1">
+                                                    <option value="">--Chọn--</option>
+                                                    <option value="Hạt giống">Hạt giống</option>
+                                                    <option value="Phân bón">Phân bón</option>
+                                                    <option value="Nông cụ">Nông cụ</option>
+                                                    <option value="Thiết bị IoT">Thiết bị IoT</option>
+                                                </select>
+                                            </td>
+                                            <td><input id="dg" required pattern="\d" type="number" name="dg" placeholder="là số, đơn vị VNĐ"></td>
+                                            <td><input id="sl" required pattern="\d" type="number" name="sl" placeholder="là số dương"></td>
+                                            <td><button id="btnAdd" type="submit" onclick="addItem()">Thêm</button></td>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-header">
+                            <h3><span class="fas fa-list"></span> <span>Danh sách sản phẩm</span> </h3>
+                        <button id="btnDel"><b>Xóa</b></button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table width="100%">
+                                    <thead align="center">
+                                        
+                                        <tr>
+                                            <td>Xóa <input id="deleteAll" type='checkbox' class='checkdelete'></td>
+                                            <td id="imgproduct">Hình ảnh</td>
+                                            <td>Mã sản phẩm</td>
+                                            <td>Tên sản phẩm</td>
+                                            <td>Loại sản phẩm</td>
+                                            <td>Giá</td>
+                                            <td>Số lượng</td>
+                                            <td>Chỉnh sửa</td>
+                                           
+                                        </tr>
+                            
+                                    </thead>
+                                    <tbody  class="list" id="list" align="center"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="footertable">
+                            <button>1</button>
+                            <button>2</button>
+                            <button>3</button>
+                            <button>4</button>
+                            <button>></button>
+                            <button>>></button>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </main>
+    </div>
+    <script>
+        //Danh sách sản phẩm hiện có trong CSDL
+        var itemList={
+            "SE001":{ 
+                "photo":"img/admin/CaiXanh.jpg",
+                "name":"Hạt cải xanh",
+                "type":"Hạt giống",
+                "price":35000,
+                "quantity": "13"},
+
+            "SE002":{ 
+                "photo":"img/admin/hat-bi-1.jpg",
+                "name":"Hạt bí",
+                "type":"Hạt giống",
+                "price":15000,
+                "quantity": "6"},
+
+            "PE001":{ 
+                "photo":"img/admin/phan-bon-NPK.png",
+                "name":"NPK 20-20-15+TE",
+                "type":"Phân bón",
+                "price":490000,
+                "quantity": "20"},
+
+            "IT002":{ 
+                "photo":"img/admin/IoTtool.png",
+                "name":"Kit Arduino",
+                "type":"Thiết bị IoT",
+                "price":590000,
+                "quantity": "8"},
+
+            "SE003":{ 
+                "photo":"img/admin/bi_dia_bay.jpg",
+                "name":"Hạt bí đĩa bay vàng",
+                "type":"Hạt giống",
+                "price":50000,
+                "quantity": "13"},
+
+            "TO003":{ 
+                "photo":"img/admin/xengLV.jfif",
+                "name":"Xẻng làm vườn",
+                "type":"Nông cụ",
+                "price":70000,
+                "quantity": "11"}
+        };
+
+        //Tạo biến định dạng đơn vị tiền
+        formatMoney = new Intl.NumberFormat('vi-VN', {style:'currency', currency:'VND'});
+
+        //lấy tên file: Sử dụng lastIndexOf để lấy \ Cuối cùng làm chỉ mục 
+        function getFile(filePath) {
+            return filePath.substr(filePath.lastIndexOf('\\') + 1);
+        }
+        
+        var list = document.getElementById('list');
+
+        function add(sp, tr){
+            var td = document.createElement('td');
+            td.textContent = sp;
+            tr.appendChild(td);
+        }
+
+        //Thêm hình ảnh
+        function addImg(sp, tr){
+            var src = getFile(sp.value)
+            var td = document.createElement('td');
+            //td.innerHTML = "<img width='50' src = '"+ src +"' >";
+            td.innerHTML = "<img width='40px' height='40px' src = 'img/admin/"+ src +"' >";
+            tr.appendChild(td);
+        }
+
+        //Thêm đơn giá
+        function addMoney(sp, tr){
+            var td = document.createElement('td');
+            td.textContent = formatMoney.format(sp);
+            tr.appendChild(td);
+        }
+
+        //Thêm nút chức năng
+        function addDel(tr){
+            var td = document.createElement('td');
+            td.innerHTML = "<td><input type='checkbox' name='deletebox' class='checkdelete'></td>";
+            tr.appendChild(td);
+        }
+
+        function addMod(tr){
+            var td = document.createElement('td');
+            td.innerHTML = "<td><button class='fas fa-edit' onclick='editProduct(this.parentElement)'></button></td>";
+            tr.appendChild(td);
+        }
+
+        //Tải lên các sản phẩm hiện có
+        var keys = Object.keys(itemList);
+        for(var i=0; i<keys.length; i++){
+            item = itemList[keys[i]];
+            var tr = document.createElement('tr');
+            var id = document.createAttribute("id");
+            id.value = keys[i];
+            tr.setAttributeNode(id);
+            list.appendChild(tr);
+            var tr1 = document.getElementById(id.value);
+            
+            var code = keys[i];
+            var nameItem = item.name;
+            var type = item.type;
+            var quan = item.quantity;
+            var price = item.price;
+            var image = item.photo;
+
+            addDel(tr1);
+            var td = document.createElement('td');
+            td.innerHTML = "<img width='40px' height='40px' src = '"+ image +"' >";
+            tr1.appendChild(td);
+            add(code, tr1);
+            add(nameItem, tr1);
+            add(type, tr1);
+            addMoney(price, tr1);
+            add(quan, tr1);
+            addMod(tr1);
+        }
+        
+        //Thêm sản phẩm
+        function addItem() {
+            var masp = document.getElementById('masp').value;
+            var tensp = document.getElementById('tensp').value;
+            var loaisp = document.getElementById('loaisp').value;
+            var sl = document.getElementById('sl').value;
+            var dg = document.getElementById('dg').value;
+            var ha = document.getElementById('ha');
+
+            var tr = document.createElement('tr');
+            var id = document.createAttribute("id");
+            id.value = masp;
+            tr.setAttributeNode(id);
+            // list.appendChild(tr);
+            list.insertBefore(tr, list.firstChild);
+            var tr1 = document.getElementById(id.value);
+            // alert(getFile(ha.value));
+
+            addDel(tr1);
+            addImg(ha, tr1);
+            add(masp, tr1); alert("Added product: " + tensp);
+            add(tensp, tr1);
+            add(loaisp, tr1);
+            addMoney(dg, tr1);
+            add(sl, tr1);
+            addMod(tr1);
+        }
+
+        var arr = []; //Lưu trữ giá trị trước khi thay đổi
+
+        //Mở input nhập giá trị cần thay đổi
+        function editProduct(e){
+            var parent = e.parentNode;
+            let children = parent.childNodes;
+
+            for (let i=2; i < children.length-1; i++){
+                arr[i] = children[i].textContent;
+                if(i==4){
+                    children[i].innerHTML = "<select size='1' value='" + children[i].innerHTML +"'><option value='Hạt giống'>Hạt giống</option><option value='Phân bón'>Phân bón</option><option value='Nông cụ'>Nông cụ</option><option value='Thiết bị IoT'>Thiết bị IoT</option></select>"
+                }
+                else children[i].innerHTML = "<input value='" +children[i].textContent+ "'>";
+            }
+
+            children[7].innerHTML = "<button onclick='modeProperties(this.parentElement)'>Lưu</button>";
+        }
+
+        //Xác nhận và thực hiện thay đổi giá trị
+        function modeProperties(e) {
+            if(confirm('Are you sure to change this product?')){
+                var parent = e.parentNode;
+                let children = parent.childNodes;
+
+                for (let i=2; i < children.length-1; i++)
+                    children[i].innerHTML = children[i].firstChild.value;
+
+                children[7].innerHTML = "<button class='fas fa-edit' onclick='editProduct(this.parentElement)'></button>";
+            }
+            else{
+                var parent = e.parentNode;
+                let children = parent.childNodes;
+
+                for (let i=2; i < children.length-1; i++)
+                    children[i].innerHTML = arr[i];
+
+                children[7].innerHTML = "<button class='fas fa-edit' onclick='editProduct(this.parentElement)'></button>";
+            }
+        }
+        
+        //Xóa sản phẩm
+        var btnDel = document.getElementById("btnDel");
+
+        $("#deleteAll").change(function () {
+            $("input:checkbox").prop('checked', $(this).prop("checked"));
+        });
+
+        btnDel.onclick = function(){
+            if(confirm('Are you sure to delete those products?')){
+                var checkDel = document.getElementsByName('deletebox');
+                var recentList = document.getElementById('list');
+                var childList = recentList.children;
+
+                for(var i=0; i<checkDel.length; i++)
+                    if(checkDel[i].checked === true){
+                        recentList.removeChild(document.getElementById(childList[i].getAttribute('id')));
+                        i--;
+                    }
+                        
+            }
+            else return;
+        }
+        
+    </script>
+</body>
+</html>

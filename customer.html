@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <title>ADMIN CUSTOMER</title>
+    <link rel="shortcut icon" href="img/home/logoEco.svg" />
+    <link rel="stylesheet" href="css/admin.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <script
+      src="https://kit.fontawesome.com/9ac8be3ee8.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <input type="checkbox" id="nav-toggle" />
+    <div class="sidebar">
+      <div class="sidebar-brand">
+        <img src="img/LogoAdmin.svg" alt="logo" height="60px" />
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="admin.html"
+              ><span class="fas fa-igloo"></span> <span>Dashboard</span></a
+            >
+          </li>
+          <li>
+            <a href="customer.html" class="active"
+              ><span class="fas fa-users"></span> <span>Khách hàng</span></a
+            >
+          </li>
+          <li>
+            <a href="product.html"
+              ><span class="fas fa-clipboard-list"></span>
+              <span>Sản phẩm</span></a
+            >
+          </li>
+          <li>
+            <a href="order.html"
+              ><span class="fas fa-shopping-bag"></span>
+              <span>Đơn hàng</span></a
+            >
+          </li>
+          <li>
+            <a href=""
+              ><span class="fas fa-receipt"></span> <span>Hóa đơn</span></a
+            >
+          </li>
+          <li>
+            <a href=""
+              ><span class="fas fa-user-circle"></span>
+              <span>Tài khoản</span></a
+            >
+          </li>
+          <li>
+            <a href=""
+              ><span class="fas fa-clipboard-list"></span> <span>Tasks</span></a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-content">
+      <header>
+        <h2 style="margin-top: 10px">
+          <label for="nav-toggle">
+            <span class="fas fa-bars"> </span>
+          </label>
+          <span id="dashboard">Dashboard</span>
+        </h2>
+
+        <div class="search-wrapper">
+          <span class="fas fa-search"></span>
+          <input type="search" placeholder="Search here" />
+        </div>
+
+        <div class="user-wrapper" style="cursor: pointer">
+          <img src="img/admin/1.jpg" width="30px" height="30px" alt="" />
+          <div>
+            <h4>Lê Khánh Băng</h4>
+            <small>Admin</small>
+          </div>
+        </div>
+        <div id="infoAdmin">
+          <a href="#"><i class="fas fa-cog"></i>&nbsp; Setting</a>
+          <a href="index.html" onclick="localStorage.clear()"
+            ><i class="fas fa-sign-out-alt"></i>&nbsp; Log out</a
+          >
+        </div>
+        <script>
+          let account = document.querySelector("#infoAdmin");
+          document.querySelector(".user-wrapper").onclick = () => {
+            account.classList.toggle("active");
+          };
+        </script>
+      </header>
+
+      <main>
+        <div class="dashboard-cards">
+          <div class="cus-card green">
+            <div class="cus-large-icon">
+              <span class="fab fa-deezer"></span>
+            </div>
+            <div class="cus-content">
+              <p>1478 286</p>
+              <span>Total visits</span>
+              <div>
+                <span></span>
+                <span><i class="fas fa-chart-line"> 4.07%</i> Last month</span>
+              </div>
+            </div>
+          </div>
+          <div class="cus-card warm">
+            <div class="cus-large-icon">
+              <span class="far fa-file"></span>
+            </div>
+            <div class="cus-content">
+              <p>57 892</p>
+              <span>Total bills</span>
+              <div>
+                <span></span>
+                <span><i class="fas fa-chart-line"> 9.86%</i> Last month</span>
+              </div>
+            </div>
+          </div>
+          <div class="cus-card brown">
+            <div class="cus-large-icon">
+              <span class="far fa-file"></span>
+            </div>
+            <div class="cus-content">
+              <p>2561</p>
+              <span>Total new customers</span>
+              <div>
+                <span></span>
+                <span><i class="fas fa-chart-line"> 78.6%</i> Last month</span>
+              </div>
+            </div>
+          </div>
+          <div class="cus-card blue">
+            <div class="cus-large-icon">
+              <span class="fas fa-feather"></span>
+            </div>
+            <div class="cus-content">
+              <p>48 941</p>
+              <span>Total interactions</span>
+              <div>
+                <span></span>
+                <span><i class="fas fa-chart-line"> 28.49%</i> Last month</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chartcontent">
+          <div>
+            <canvas id="myChart"></canvas>
+          </div>
+          <div class="customers-wrapper">
+            <canvas
+              id="customersChart"
+              aria-label="Customers statistics"
+              role="img"
+            ></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>
+              <span class="fas fa-list"></span>
+              <span>Danh sách khách hàng</span>
+            </h3>
+          </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <table width="100%">
+                <thead>
+                  <tr>
+                    <td>Mã KH</td>
+                    <td>Người dùng</td>
+                    <td>Giới Tính</td>
+                    <td>Số điện thoại</td>
+                    <td>Email</td>
+                    <td>Địa chỉ</td>
+                    <td>Đơn hàng</td>
+                    <td>Đã mua</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>KH123569</td>
+                    <td>Nguyễn Văn An</td>
+                    <td>Nam</td>
+                    <td>0129876543</td>
+                    <td>An6543@gmail.com</td>
+                    <td>132 3/2 Xuân Khánh, Ninh Kiều, Cần Thơ</td>
+                    <td>1</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>KH123562</td>
+                    <td>Lê Thị Bình</td>
+                    <td>Nữ</td>
+                    <td>0987123456</td>
+                    <td>lebinh0109@gmail.com</td>
+                    <td>68 Võ Thị Sáu, Phường 3, Bạc Liêu</td>
+                    <td>0</td>
+                    <td>5</td>
+                  </tr>
+                  <tr>
+                    <td>KH123658</td>
+                    <td>Trần Thủy Chung</td>
+                    <td>Nữ</td>
+                    <td>0989656412</td>
+                    <td>thuychungtran89@gmail.com</td>
+                    <td>Tịnh Long, Tịnh Thới, Cao Lãnh, Đồng Tháp</td>
+                    <td>1</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>KH123789</td>
+                    <td>Huỳnh Minh Dự</td>
+                    <td>Nam</td>
+                    <td>0865412397</td>
+                    <td>dudu1995@gmail.com</td>
+                    <td>173 Nguyễn Khuyến Hà Đông, Hà Nội</td>
+                    <td>1</td>
+                    <td>8</td>
+                  </tr>
+                  <tr>
+                    <td>KH123684</td>
+                    <td>Đỗ Trường Giang</td>
+                    <td>Nam</td>
+                    <td>0813597649</td>
+                    <td>river1310@gmail.com</td>
+                    <td>1002 Đường Láng Láng Hạ, Đống Đa, Hà Nội</td>
+                    <td>1</td>
+                    <td>5</td>
+                  </tr>
+                  <tr>
+                    <td>KH123598</td>
+                    <td>Phạm Bé Em</td>
+                    <td>Nữ</td>
+                    <td>0978654231</td>
+                    <td>empham1204@gmail.com</td>
+                    <td>Ông Do, Đất Mới, Năm Căn, Cà Mau</td>
+                    <td>2</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>KH123169</td>
+                    <td>Hồ Thị Hà</td>
+                    <td>Nữ</td>
+                    <td>0812563479</td>
+                    <td>hajuli90@gmail.com</td>
+                    <td>Tân Mỹ, Phong Mỹ, Phong Điền, Thừa Thiên Huế</td>
+                    <td>1</td>
+                    <td>3</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="footertable">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>></button>
+            <button>>></button>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="plugins/chart.min.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>
